@@ -9,7 +9,7 @@ class Url_sql:
 
     def __init__(self, conn=None):
         load_dotenv()
-        self.database_url = os.getenv('DATABASE_URL') + "?sslmode=require"
+        self.database_url = os.getenv('DATABASE_URL')
         if not conn:
             self.conn = psycopg2.connect(self.database_url)
         else:
