@@ -6,22 +6,24 @@ from page_analyzer.utils import get_url_params
 
 
 class Url_sql:
-
     def __init__(self, conn=None):
         load_dotenv()
         self.database_url = os.getenv('DATABASE_URL')
-        if not conn:
+        self.conn = None
+
+    def get_connection(self):
+        # Проверяем, если соединение закрыто, то открываем новое
+        if self.conn is None or self.conn.closed:
             self.conn = psycopg2.connect(self.database_url)
-        else:
-            self.conn = psycopg2.connect(conn)
+        return self.conn
 
     def make_sql(self, sql: str, sitters: tuple = ()):
         result = []
-        with self.conn.cursor(cursor_factory=DictCursor) as curr:
+        with self.get_connection().cursor(cursor_factory=DictCursor) as curr:
             curr.execute(sql, sitters)
             for item in curr:
                 result.append(item)
-            self.conn.commit()
+            self.conn.commit()  # Фиксируем изменения
         return result
 
     def add_url(self, name: str):
@@ -40,9 +42,8 @@ class Url_sql:
                     VALUES (%s, %s, %s, %s, %s) RETURNING id;"""
         id = self.make_sql(
             sql=sql,
-            sitters=(
-                url_id, 200, data['h1'],
-                data['title'], data['description']))
+            sitters=(url_id, 200, data['h1'], data['title'], data['description'])
+        )
         return id[0][0]
 
     def show_urls(self):
