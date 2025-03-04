@@ -42,7 +42,11 @@ class Url_sql:
                     VALUES (%s, %s, %s, %s, %s) RETURNING id;"""
         id = self.make_sql(
             sql=sql,
-            sitters=(url_id, 200, data['h1'], data['title'], data['description'])
+            sitters=(url_id, 200,
+                     data['h1'],
+                     data['title'],
+                     data['description']
+                     )
         )
         return id[0][0]
 
