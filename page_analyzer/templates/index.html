@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-dark text-secondary px-4 py-5 text-center">
+    <div class="py-5">
+        <h1 class="display-5 fw-bold text-white">Добро пожаловать в Page Analyzer!</h1>
+        <div class="col-lg-8 mx-auto">
+            <p class="fs-5 mb-4">
+                Этот сервис анализирует URL-адреса и извлекает ключевую информацию из их HTML-кода.
+                Введите адрес страницы, чтобы начать проверку.
+            </p>
+
+            <!-- Форма для ввода URL -->
+            <form action="{{ url_for('add_url') }}" method="POST" class="mt-4">
+                <div class="input-group input-group-lg">
+                    <input type="text" name="url" class="form-control" placeholder="https://www.example.com" required>
+                    <button type="submit" class="btn btn-warning">Проверить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
