@@ -1,38 +1,29 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="container-lg mt-3">
-    <h2 class="text-center">Список добавленных сайтов</h2>
 
-    {% if urls %}
-    <div class="table-responsive mt-3">
-        <table class="table table-dark table-hover text-center align-middle" data-test="urls">
+<div class="container-lg mt-3">
+    <div class="table-responsive">
+        <table class="table table-dark table-hover" data-test="urls">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Имя</th>
-                    <th>Последняя проверка</th>
-                    <th>Код ответа</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Последняя проверка</th>
+                    <th scope="col">Код ответа</th>
                 </tr>
             </thead>
             <tbody>
                 {% for url in urls %}
-                <tr style="cursor: pointer;" onclick="window.location='{{ url_for('show_url', id=url.id) }}';">
-                    <td>{{ url.id }}</td>
-                    <td>
-                        <a href="{{ url.name }}" class="text-info text-decoration-none" target="_blank">
-                            {{ url.name }}
-                        </a>
-                    </td>
-                    <td>{{ url.created_at | format_date if url.created_at else '-' }}</td>
-                    <td>{{ url.status_code if url.status_code else '-' }}</td>
-                </tr>
+                    <tr onclick="window.location='{{ url_for('show_url', id=url.id) }}';" style="cursor: pointer;">
+                        <td>{{ url.id }}</td>
+                        <td><class="text-info">{{ url.name }}</a></td>
+                        <td>{{ url.created_at | format_date if url.created_at else ''}}</td>
+                        <td>{{ url.status_code if url.status_code else '' }}</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    {% else %}
-    <p class="text-center text-muted">Пока нет добавленных сайтов.</p>
-    {% endif %}
 </div>
+
 {% endblock %}

@@ -1,11 +1,7 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="container mt-4">
-    <h2 class="text-center">Информация о сайте</h2>
-
-    <!-- Таблица с основной информацией о сайте -->
-    <div class="table-responsive mt-3">
+<div class="container mt-3">
+    <div class="table-responsive">
         <table class="table table-dark table-striped table-hover table-borderless align-middle" data-test="url">
             <thead>
                 <tr>
@@ -17,30 +13,20 @@
             <tbody>
                 <tr>
                     <td>{{ url.id }}</td>
-                    <td><a href="{{ url.name }}" target="_blank" class="text-warning">{{ url.name }}</a></td>
-                    <td>{{ url.created_at | format_date if url.created_at else '-' }}</td>
+                    <td>{{url.name}}</td>
+                    <td>{{url.created_at | format_date if url.created_at else '' }}</td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
 
-<!-- Кнопка "Запустить проверку" -->
 <div class="container mt-4">
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-end mb-3">
         <form action="{{ url_for('check_url', id=url.id) }}" method="post">
-            <button type="submit" class="btn btn-primary">
-                <i class="bi bi-play-circle"></i> Запустить проверку
-            </button>
+            <input type="submit" class="btn btn-primary" value="Запустить проверку" text="Запустить проверку">
         </form>
     </div>
-</div>
-
-<!-- Проверки сайта -->
-<div class="container mt-4">
-    <h3>История проверок</h3>
-
-    {% if url.checks %}
     <div class="table-responsive">
         <table class="table table-dark table-striped table-hover table-borderless align-middle" data-test="checks">
             <thead>
@@ -56,19 +42,15 @@
             <tbody>
                 {% for check in url.checks %}
                 <tr>
-                    <td>{{ check.id }}</td>
-                    <td>{{ check.status_code }}</td>
-                    <td class="text-truncate" style="max-width: 150px;">{{ check.h1 or '-' }}</td>
-                    <td class="text-truncate" style="max-width: 200px;">{{ check.title or '-' }}</td>
-                    <td class="text-truncate" style="max-width: 250px;">{{ check.description or '-' }}</td>
-                    <td>{{ check.created_at | format_date if check.created_at else '-' }}</td>
+                    <td>{{check.id}}</td>
+                    <td>{{check.status_code}}</td>
+                    <td>{{check.h1}}</td>
+                    <td>{{check.title}}</td>
+                    <td>{{check.description}}</td>
+                    <td>{{check.created_at | format_date if check.created_at else '' }} </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    {% else %}
-    <p class="text-muted">Проверок пока нет.</p>
-    {% endif %}
-</div>
 {% endblock %}
