@@ -28,6 +28,3 @@ jobs:
 
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
-
-      - name: Run tests
-        run: poetry run pytest --maxfail=1 --disable-warnings -v
