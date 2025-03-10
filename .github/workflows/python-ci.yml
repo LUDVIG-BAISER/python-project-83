@@ -21,8 +21,8 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+        run: poetry install
+
 
       - name: Run tests
         run: pytest --maxfail=1 --disable-warnings -v
